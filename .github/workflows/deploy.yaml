@@ -1,0 +1,35 @@
+name: Auto Deploy to Alwaysdata
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.24.2'
+        
+    - name: Setup SSH key
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.KEY }}
+        
+    - name: Add server to known_hosts
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -H ssh-t7ru.alwaysdata.net >> ~/.ssh/known_hosts
+        
+    - name: Make deploy script executable
+      run: chmod +x ./deploy.sh
+      
+    - name: Run deployment script
+      run: ./deploy.sh

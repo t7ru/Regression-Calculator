@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Linear Regression Analyzer</title>
+    <link rel="icon" href="https://t7ru.link/assets/favicon.png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script defer src="front.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header class="text-center mb-4">
+        <h1>
+          the linear regression and whatever junk i had thrown in calculator
+        </h1>
+        <h3><i>"this is so sigma"</i></h3>
+      </header>
+
+      <div class="card shadow-sm">
+        <div class="card-header">Input Data</div>
+        <div class="card-body">
+          <form id="calcForm">
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="useDefault" />
+              <label class="form-check-label" for="useDefault">
+                Use default values (mainly for testing)
+              </label>
+            </div>
+            <div class="mb-3">
+              <label for="x_values" class="form-label"
+                >X Values (space-separated):</label
+              >
+              <textarea
+                class="form-control"
+                id="x_values"
+                name="x_values"
+                rows="3"
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="y_values" class="form-label"
+                >Y Values (space-separated):</label
+              >
+              <textarea
+                class="form-control"
+                id="y_values"
+                name="y_values"
+                rows="3"
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="x_axis_label" class="form-label">X Axis Label:</label>
+              <input
+                class="form-control"
+                id="x_axis_label"
+                name="x_axis_label"
+                value="X"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="y_axis_label" class="form-label">Y Axis Label:</label>
+              <input
+                class="form-control"
+                id="y_axis_label"
+                name="y_axis_label"
+                value="Y"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Regression Type:</label>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="regressionType"
+                  id="linearRegression"
+                  value="linear"
+                  checked
+                />
+                <label class="form-check-label" for="linearRegression">
+                  Linear Regression \((y = mx + b)\)
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="regressionType"
+                  id="quadraticRegression"
+                  value="quadratic"
+                />
+                <label class="form-check-label" for="quadraticRegression">
+                  Quadratic Regression \((y = ax^2 + bx + c)\)
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="regressionType"
+                  id="exponentialRegression"
+                  value="exponential"
+                />
+                <label class="form-check-label" for="exponentialRegression">
+                  Exponential Regression \((y = ae^{bx})\)
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="regressionType"
+                  id="powerRegression"
+                  value="power"
+                />
+                <label class="form-check-label" for="powerRegression">
+                  Power Regression \((y = ax^b)\)
+                </label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Funny Numbers:</label>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="useWholeNumberAxes"
+                  checked
+                />
+                <label class="form-check-label" for="useWholeNumberAxes">
+                  Use whole numbers for chart axes
+                </label>
+              </div>
+              <div class="form-check mb-3">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="useRounding"
+                  checked
+                />
+                <label class="form-check-label" for="useRounding">
+                  Round calculation results (equations, r value, etc.)
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+              Calculate
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-header">Results</div>
+        <div class="card-body">
+          <pre id="resultsText">Your calculation results will appear here.</pre>
+          <canvas id="plotCanvas" style="display: none"></canvas>
+          <div class="text-center mt-3 justify-content-center gap-2 d-flex">
+            <button
+              id="exportButton"
+              class="btn btn-secondary"
+              style="display: none"
+            >
+              Export Graph as Image
+            </button>
+            <button
+              id="copyButton"
+              class="btn btn-secondary"
+              style="display: none"
+            >
+              Copy Image
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      made for my math classes and also to learn golang backend—i make things to
+      be lazier tldr
+    </div>
+  </body>
+</html>
